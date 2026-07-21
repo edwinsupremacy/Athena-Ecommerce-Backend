@@ -1,0 +1,6 @@
+@AthenaEcommerce_website_HostAddress = http://localhost:5018
+
+GET {{AthenaEcommerce_website_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
