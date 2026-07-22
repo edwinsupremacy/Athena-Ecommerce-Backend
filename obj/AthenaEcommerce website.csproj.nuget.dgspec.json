@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Edwins files backup\\dev\\ASP.Net\\AthenaEcommerce website\\AthenaEcommerce website.csproj": {}
+    "C:\\dev\\Ecommerce-website\\Athena-Ecommerce-Backend\\AthenaEcommerce website.csproj": {}
   },
   "projects": {
-    "D:\\Edwins files backup\\dev\\ASP.Net\\AthenaEcommerce website\\AthenaEcommerce website.csproj": {
+    "C:\\dev\\Ecommerce-website\\Athena-Ecommerce-Backend\\AthenaEcommerce website.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Edwins files backup\\dev\\ASP.Net\\AthenaEcommerce website\\AthenaEcommerce website.csproj",
+        "projectUniqueName": "C:\\dev\\Ecommerce-website\\Athena-Ecommerce-Backend\\AthenaEcommerce website.csproj",
         "projectName": "AthenaEcommerce website",
-        "projectPath": "D:\\Edwins files backup\\dev\\ASP.Net\\AthenaEcommerce website\\AthenaEcommerce website.csproj",
+        "projectPath": "C:\\dev\\Ecommerce-website\\Athena-Ecommerce-Backend\\AthenaEcommerce website.csproj",
         "packagesPath": "C:\\Users\\edwin\\.nuget\\packages\\",
-        "outputPath": "D:\\Edwins files backup\\dev\\ASP.Net\\AthenaEcommerce website\\obj\\",
+        "outputPath": "C:\\dev\\Ecommerce-website\\Athena-Ecommerce-Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\edwin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -46,9 +46,33 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[10.0.10, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.3.11, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.10, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[10.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[10.0.10, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[8.20.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.20.0, )"
             }
           },
           "imports": [
