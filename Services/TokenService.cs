@@ -27,7 +27,6 @@ public class TokenService : ITokenService
         {
             new Claim(JwtRegisteredClaimNames.Email,user.Email!),
             new Claim(JwtRegisteredClaimNames.Sub,user.Id),
-            new Claim(ClaimTypes.Role,"Customer")
         };
         ///signing key
         var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"])); 

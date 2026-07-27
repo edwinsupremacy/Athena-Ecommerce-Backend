@@ -8,21 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.29.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.20.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.20.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="Config\" />
     <Folder Include="Controllers\AdminControllers\" />
-    <Folder Include="Controllers\Auth\" />
+    <Folder Include="Controllers\CheckoutService\" />
+    <Folder Include="Controllers\Transaction\" />
     <Folder Include="DTOs\" />
     <Folder Include="DTOs\AdminDto\" />
+    <Folder Include="DTOs\Callbacks\" />
+    <Folder Include="DTOs\CheckoutDto\" />
+    <Folder Include="DTOs\ItemDto\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
   </ItemGroup>

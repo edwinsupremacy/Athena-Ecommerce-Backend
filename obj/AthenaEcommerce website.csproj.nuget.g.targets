@@ -6,6 +6,8 @@
     <Import Project="$(NuGetPackageRoot)microsoft.identitymodel.tokens\8.20.0\buildTransitive\Microsoft.IdentityModel.Tokens.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.identitymodel.tokens\8.20.0\buildTransitive\Microsoft.IdentityModel.Tokens.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.identitymodel.jsonwebtokens\8.20.0\buildTransitive\Microsoft.IdentityModel.JsonWebTokens.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.identitymodel.jsonwebtokens\8.20.0\buildTransitive\Microsoft.IdentityModel.JsonWebTokens.targets')" />
     <Import Project="$(NuGetPackageRoot)system.identitymodel.tokens.jwt\8.20.0\buildTransitive\System.IdentityModel.Tokens.Jwt.targets" Condition="Exists('$(NuGetPackageRoot)system.identitymodel.tokens.jwt\8.20.0\buildTransitive\System.IdentityModel.Tokens.Jwt.targets')" />
+    <Import Project="$(NuGetPackageRoot)mono.texttemplating\3.0.0\buildTransitive\Mono.TextTemplating.targets" Condition="Exists('$(NuGetPackageRoot)mono.texttemplating\3.0.0\buildTransitive\Mono.TextTemplating.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.11.0\buildTransitive\Microsoft.CodeAnalysis.Analyzers.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.11.0\buildTransitive\Microsoft.CodeAnalysis.Analyzers.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.openapi\10.0.10\build\Microsoft.AspNetCore.OpenApi.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.openapi\10.0.10\build\Microsoft.AspNetCore.OpenApi.targets')" />
   </ImportGroup>
 </Project>

@@ -4,12 +4,20 @@ namespace AthenaEcommerce_website.Models;
 
 public class Item
 {
-public Guid ItemId { get; set; }
-public string ImageUrl { get; set; } = string.Empty;
-public string ImagePublicId { get; set; } = string.Empty;
-public string Name { get; set; } = String.Empty;
-public int Price { get; set; }
-public int StockAvailable { get; set; }
-public int SizesAvailable { get; set; }
+    public Guid Id { get; set; }
+    public string ImageUrl { get; set; } = string.Empty;
+    public string ImagePublicId { get; set; } = string.Empty;
+    public string Name { get; set; } = String.Empty;
+    public decimal Price { get; set; }
+ 
+    public Category Category { get; set; }
 
+    public PriceRange PriceRange { get; set; }
+    public Color Color { get; set; }
+    public ShoeType ShoeType { get; set; }
+
+    public ICollection<ItemSize> ItemSizes { get; set; } = new List<ItemSize>();
+    public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }
+
+

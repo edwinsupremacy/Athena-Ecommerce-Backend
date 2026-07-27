@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AthenaEcommerce website")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e6a9afe712484983600e0a6948aa2a009e6fa56")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+628b3f31292b7fa40a8a2257e5c62042a6f44443")]
 [assembly: System.Reflection.AssemblyProductAttribute("AthenaEcommerce website")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AthenaEcommerce website")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
