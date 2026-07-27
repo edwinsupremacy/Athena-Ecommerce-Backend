@@ -94,6 +94,43 @@ namespace AthenaEcommerce_website.Services
             return JsonSerializer.Deserialize<MpesaStkPushResponse>(responseJson)!;
         }
 
+        public async Task<MpesaStkQueryResponse> QueryStkStatusAsync(string checkoutRequestId)
+        {
+            var accessToken = await GetAccessTokenAsync();
+
+            var eatZone = TimeZoneInfo.FindSystemTimeZoneById("Africa/Nairobi");
+            var eatNow = TimeZoneInfo.ConvertTime(DateTime.UtcNow, eatZone);
+            var timestamp = eatNow.ToString("yyyyMMddHHmmss");
+
+            var password = Convert.ToBase64String(
+                Encoding.UTF8.GetBytes($"{_config.BusinessShortCode}{_config.Passkey}{timestamp}"));
+
+            var payload = new
+            {
+                BusinessShortCode = _config.BusinessShortCode,
+                Password = password,
+                Timestamp = timestamp,
+                CheckoutRequestID = checkoutRequestId
+            };
+
+            var request = new HttpRequestMessage(HttpMethod.Post,
+                $"{_config.BaseUrl}/mpesa/stkpushquery/v1/query");
+
+            request.Headers.Add("Authorization", $"Bearer {accessToken}");
+            request.Content = new StringContent(
+                JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.SendAsync(request);
+            var responseJson = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"STK Query failed: {responseJson}");
+            }
+
+            return JsonSerializer.Deserialize<MpesaStkQueryResponse>(responseJson)!;
+        }
+
 
     }
 }

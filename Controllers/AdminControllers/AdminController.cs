@@ -147,7 +147,7 @@ namespace AthenaEcommerce_website.Controllers.AdminControllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest("Wrong format");
+                return BadRequest(ModelState);
             }
             User? user;
 
@@ -160,9 +160,18 @@ namespace AthenaEcommerce_website.Controllers.AdminControllers
                 user = await _userManager.FindByNameAsync(loginAdminDto.UserNameOrEmailorPhone);
             }
 
-            if (user == null) return BadRequest("Email/Username or Password is incorrect");
+            if (user == null)
+            {
+                Console.WriteLine("User not found");
+                return BadRequest("Email/Username or Password is incorrect");
+            }
+
+        
 
             var password = await _signInManager.CheckPasswordSignInAsync(user, loginAdminDto.Password, false);
+
+            Console.WriteLine($"Password valid: {password.Succeeded}");
+
             if (!password.Succeeded)
             {
                 return BadRequest("Wrong credentials");
@@ -221,6 +230,7 @@ namespace AthenaEcommerce_website.Controllers.AdminControllers
             {
                 Name = postItemDto.Name,
                 Price = postItemDto.Price,
+                Description = postItemDto.Description,
                 ImageUrl = uploadedImage.SecureUrl.ToString(),
                 ImagePublicId = uploadedImage.PublicId,
                 Category = postItemDto.Category,
@@ -258,6 +268,7 @@ namespace AthenaEcommerce_website.Controllers.AdminControllers
             }
 
             existingItem.Name = updateItemDto.Name ?? existingItem.Name;
+            existingItem.Description = updateItemDto.Description ?? existingItem.Description;
             existingItem.Price = updateItemDto.Price ?? existingItem.Price;
             existingItem.Category = updateItemDto.Category ?? existingItem.Category;
             existingItem.PriceRange = updateItemDto.PriceRange ?? existingItem.PriceRange;

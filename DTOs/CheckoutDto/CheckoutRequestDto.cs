@@ -33,3 +33,12 @@ public class MpesaStkPushResponse
 }
 
 
+public class MpesaStkQueryResponse
+{
+    public string ResponseCode { get; set; } = string.Empty;
+    public string ResponseDescription { get; set; } = string.Empty;
+    public string MerchantRequestID { get; set; } = string.Empty;
+    public string CheckoutRequestID { get; set; } = string.Empty;
+    public string ResultCode { get; set; } = string.Empty;
+    public string ResultDesc { get; set; } = string.Empty;
+}

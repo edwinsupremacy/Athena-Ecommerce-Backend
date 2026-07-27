@@ -68,11 +68,14 @@ builder.Services.AddSingleton(_ => new Cloudinary(new Account(
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddHostedService<PendingOrderCleanupService>();
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
+    ?? new[] { "http://localhost:5173", "http://localhost:5174" };
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Frontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
+        policy.WithOrigins(allowedOrigins)
             .AllowAnyMethod()
             .AllowAnyHeader();
     });

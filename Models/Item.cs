@@ -9,6 +9,7 @@ public class Item
     public string ImagePublicId { get; set; } = string.Empty;
     public string Name { get; set; } = String.Empty;
     public decimal Price { get; set; }
+    public string Description { get; set; } = string.Empty;
  
     public Category Category { get; set; }
 

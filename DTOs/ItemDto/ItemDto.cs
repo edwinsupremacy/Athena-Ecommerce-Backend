@@ -12,6 +12,7 @@ public class ItemSizeDto
 public class PostItemDto
 {
     public string Name { get; set; } = string.Empty;
+      public string Description { get; set; } = string.Empty;
     public decimal Price { get; set; }
     public List<ItemSizeDto> Sizes { get; set; } = new();
     public IFormFile Image { get; set; } = null!;
@@ -24,6 +25,7 @@ public class PostItemDto
 public class UpdateItemDto
 {
     public string? Name { get; set; }
+     public string? Description { get; set; } 
     public decimal? Price { get; set; }
     public List<ItemSizeDto>? Sizes { get; set; }
     public IFormFile? Image { get; set; }
@@ -37,6 +39,7 @@ public class ItemResponseDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty; 
     public decimal Price { get; set; }
     public List<ItemSizeDto> Sizes { get; set; } = new();
     public string ImageUrl { get; set; } = string.Empty;

@@ -66,6 +66,7 @@ namespace AthenaEcommerce_website.Controllers.Auth
                 {
                     Id = i.Id,
                     Name = i.Name,
+                    Description = i.Description,
                     Price = i.Price,
                     Sizes = i.ItemSizes.Select(s => new ItemSizeDto
                     {
@@ -127,6 +128,7 @@ namespace AthenaEcommerce_website.Controllers.Auth
                 {
                     Id = i.Id,
                     Name = i.Name,
+                    Description = i.Description,
                     Price = i.Price,
                     Sizes = i.ItemSizes.Select(s => new ItemSizeDto
                     {
@@ -162,6 +164,7 @@ namespace AthenaEcommerce_website.Controllers.Auth
                 {
                     Id = i.Id,
                     Name = i.Name,
+                    Description = i.Description,
                     Price = i.Price,
                     Sizes = i.ItemSizes.Select(s => new ItemSizeDto
                     {
