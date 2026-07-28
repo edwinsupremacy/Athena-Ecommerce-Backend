@@ -132,74 +132,91 @@ namespace AthenaEcommerce_website.Controllers.CheckoutService
         }
 
         [HttpPost("mpesa-callback")]
-public async Task<IActionResult> MpesaCallback([FromBody] MpesaCallbackDto callback)
-{
-    var stkCallback = callback.Body.StkCallback;
-
-    var order = await _context.Order
-        .Include(o => o.OrderItems)
-        .FirstOrDefaultAsync(o => o.CheckoutRequestId == stkCallback.CheckoutRequestID);
-
-    if (order == null)
-        return Ok(new { ResultCode = 0, ResultDesc = "Accepted" });
-
-    if (order.Status != OrderStatus.Pending)
-        return Ok(new { ResultCode = 0, ResultDesc = "Accepted" });
-
-    // Don't trust the callback body directly — verify with Safaricom ourselves
-    MpesaStkQueryResponse verified;
-    try
-    {
-        verified = await _mpesaService.QueryStkStatusAsync(stkCallback.CheckoutRequestID);
-    }
-    catch (Exception)
-    {
-        // Could not verify right now — leave order Pending, let the cleanup service
-        // or a retry handle it later, rather than trusting the unverified callback.
-        return Ok(new { ResultCode = 0, ResultDesc = "Accepted" });
-    }
-
-    if (verified.ResultCode == "0")
-    {
-        var receiptItem = stkCallback.CallbackMetadata?.Item
-            .FirstOrDefault(i => i.Name == "MpesaReceiptNumber");
-
-        var amountItem = stkCallback.CallbackMetadata?.Item
-            .FirstOrDefault(i => i.Name == "Amount");
-        var paidAmount = amountItem?.Value.GetDecimal() ?? 0;
-
-        if (paidAmount < order.TotalPrice)
+        public async Task<IActionResult> MpesaCallback([FromBody] MpesaCallbackDto callback)
         {
-            await RestoreStockAsync(order);
-            order.Status = OrderStatus.Failed;
+            var stkCallback = callback.Body.StkCallback;
+
+            var order = await _context.Order
+                .Include(o => o.OrderItems)
+                .FirstOrDefaultAsync(o => o.CheckoutRequestId == stkCallback.CheckoutRequestID);
+
+            if (order == null)
+                return Ok(new { ResultCode = 0, ResultDesc = "Accepted" });
+
+            if (order.Status != OrderStatus.Pending)
+                return Ok(new { ResultCode = 0, ResultDesc = "Accepted" });
+
+            // Don't trust the callback body directly — verify with Safaricom ourselves
+            MpesaStkQueryResponse verified;
+            try
+            {
+                verified = await _mpesaService.QueryStkStatusAsync(stkCallback.CheckoutRequestID);
+            }
+            catch (Exception)
+            {
+                // Could not verify right now — leave order Pending, let the cleanup service
+                // or a retry handle it later, rather than trusting the unverified callback.
+                return Ok(new { ResultCode = 0, ResultDesc = "Accepted" });
+            }
+
+            if (verified.ResultCode == "0")
+            {
+                var receiptItem = stkCallback.CallbackMetadata?.Item
+                    .FirstOrDefault(i => i.Name == "MpesaReceiptNumber");
+
+                var amountItem = stkCallback.CallbackMetadata?.Item
+                    .FirstOrDefault(i => i.Name == "Amount");
+                var paidAmount = amountItem?.Value.GetDecimal() ?? 0;
+
+                if (paidAmount < order.TotalPrice)
+                {
+                    await RestoreStockAsync(order);
+                    order.Status = OrderStatus.Failed;
+                }
+                else
+                {
+                    order.MpesaReceiptNumber = receiptItem?.Value.GetString();
+                    order.Status = OrderStatus.Paid;
+                }
+            }
+            else
+            {
+                await RestoreStockAsync(order);
+                order.Status = OrderStatus.Failed;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { ResultCode = 0, ResultDesc = "Accepted" });
         }
-        else
+
+        private async Task RestoreStockAsync(Order order)
         {
-            order.MpesaReceiptNumber = receiptItem?.Value.GetString();
-            order.Status = OrderStatus.Paid;
+            foreach (var orderItem in order.OrderItems)
+            {
+                var itemSize = await _context.ItemSize
+                    .FirstOrDefaultAsync(s => s.ItemId == orderItem.ItemId && s.Size == orderItem.Size);
+
+                if (itemSize != null) itemSize.StockAvailable += orderItem.Quantity;
+            }
+
         }
-    }
-    else
-    {
-        await RestoreStockAsync(order);
-        order.Status = OrderStatus.Failed;
-    }
+        [HttpGet("status/{orderReference}")]
+        public async Task<IActionResult> GetOrderStatus(string orderReference)
+        {
+            var order = await _context.Order
+                .FirstOrDefaultAsync(o => o.OrderReference == orderReference);
 
-    await _context.SaveChangesAsync();
+            if (order == null) return NotFound();
 
-    return Ok(new { ResultCode = 0, ResultDesc = "Accepted" });
-}
+            return Ok(new
+            {
+                order.OrderReference,
+                order.Status,
+                order.MpesaReceiptNumber
+            });
+        }
 
-private async Task RestoreStockAsync(Order order)
-{
-    foreach (var orderItem in order.OrderItems)
-    {
-        var itemSize = await _context.ItemSize
-            .FirstOrDefaultAsync(s => s.ItemId == orderItem.ItemId && s.Size == orderItem.Size);
-
-        if (itemSize != null) itemSize.StockAvailable += orderItem.Quantity;
-    }
-}
     }
 
 }
