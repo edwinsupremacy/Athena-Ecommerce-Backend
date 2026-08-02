@@ -37,8 +37,4 @@
     <Folder Include="Interfaces\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include=".github\ci.yml" />
-  </ItemGroup>
-
 </Project>
