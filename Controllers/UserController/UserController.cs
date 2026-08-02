@@ -13,11 +13,11 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace AthenaEcommerce_website.Controllers.Auth
+namespace AthenaEcommerce_website.Controllers.UserController
 {
-    [Route("api/auth")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class Auth : ControllerBase
+    public class UserController : ControllerBase
     {
 
         private readonly Cloudinary _cloudinary;
@@ -25,7 +25,7 @@ namespace AthenaEcommerce_website.Controllers.Auth
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ITokenService _token;
-        public Auth(Cloudinary cloudinary, ApplicationDbContext context, SignInManager<User> signInManager, UserManager<User> userManager, ITokenService token)
+        public UserController(Cloudinary cloudinary, ApplicationDbContext context, SignInManager<User> signInManager, UserManager<User> userManager, ITokenService token)
         {
             _context = context;
             _signInManager = signInManager;
@@ -168,7 +168,7 @@ namespace AthenaEcommerce_website.Controllers.Auth
 
             return Ok(items);
         }
- 
+
 
     }
 }

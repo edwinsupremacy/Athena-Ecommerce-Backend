@@ -48,14 +48,14 @@ public class ApplicationDbContext : IdentityDbContext<User>
 
         modelBuilder.Entity<Item>()
             .Property(i => i.Price)
-            .HasColumnType("decimal(18,2)");
+            .HasColumnType("numeric(18,2)");
 
         modelBuilder.Entity<OrderItem>()
             .Property(oi => oi.PriceAtPurchase)
-            .HasColumnType("decimal(18,2)");
+            .HasColumnType("numeric(18,2)");
 
         modelBuilder.Entity<Order>()
             .Property(o => o.TotalPrice)
-            .HasColumnType("decimal(18,2)");
+            .HasColumnType("numeric(18,2)");
     }
 }

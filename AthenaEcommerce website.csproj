@@ -18,12 +18,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.20.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.20.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include=".github\workflows\" />
     <Folder Include="Config\" />
     <Folder Include="Controllers\AdminControllers\" />
     <Folder Include="Controllers\CheckoutService\" />
@@ -34,6 +35,10 @@
     <Folder Include="DTOs\CheckoutDto\" />
     <Folder Include="DTOs\ItemDto\" />
     <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".github\ci.yml" />
   </ItemGroup>
 
 </Project>

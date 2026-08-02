@@ -19,9 +19,9 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddIdentity<User,IdentityRole>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequireNonAlphanumeric = true;
@@ -95,13 +95,11 @@ var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 await db.Database.MigrateAsync();
 
 app.MapMethods("/health", new[] { "GET", "HEAD" }, () => "OK");
-
-app.UseHttpsRedirection();
 app.UseCors("Frontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.UseHttpsRedirection();
+
 
 app.Run();
 
