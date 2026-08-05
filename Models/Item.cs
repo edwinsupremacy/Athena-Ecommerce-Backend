@@ -19,6 +19,7 @@ public class Item
 
     public ICollection<ItemSize> ItemSizes { get; set; } = new List<ItemSize>();
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public bool IsDeleted { get; set; } = false;
 }
 
 

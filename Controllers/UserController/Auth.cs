@@ -30,6 +30,7 @@ namespace AthenaEcommerce_website.Controllers.Auth
         public async Task<IActionResult> GetItem(Guid id)
         {
             var existingItem = await _context.Item
+                .Where(i => !i.IsDeleted)
                 .Include(i => i.ItemSizes)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
@@ -94,6 +95,8 @@ namespace AthenaEcommerce_website.Controllers.Auth
       decimal? minPrice,
       decimal? maxPrice)
         {
+            query = query.Where(i => !i.IsDeleted);
+
             if (priceRange.HasValue)
                 query = query.Where(i => i.PriceRange == priceRange.Value);
 

@@ -38,6 +38,7 @@ namespace AthenaEcommerce_website.Controllers.UserController
         public async Task<IActionResult> GetItem(Guid id)
         {
             var existingItem = await _context.Item
+                .Where(i => !i.IsDeleted)
                 .Include(i => i.ItemSizes)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
@@ -60,7 +61,7 @@ namespace AthenaEcommerce_website.Controllers.UserController
             }
 
             var items = await _context.Item
-                .Where(i => i.Name.Contains(name))
+                .Where(i => !i.IsDeleted && i.Name.Contains(name))
                 .Select(i => new ItemResponseDto
                 {
                     Id = i.Id,
@@ -91,6 +92,8 @@ namespace AthenaEcommerce_website.Controllers.UserController
       Color? color,
       ShoeType? shoeType)
         {
+            query = query.Where(i => !i.IsDeleted);
+
             if (priceRange.HasValue)
                 query = query.Where(i => i.PriceRange == priceRange.Value);
 

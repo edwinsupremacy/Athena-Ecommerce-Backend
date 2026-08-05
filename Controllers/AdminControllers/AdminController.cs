@@ -321,11 +321,22 @@ namespace AthenaEcommerce_website.Controllers.AdminControllers
         [Authorize]
         public async Task<IActionResult> DeleteItem(Guid id)
         {
-            var existingItem = await _context.Item.FindAsync(id);
+            var existingItem = await _context.Item
+                .Include(i => i.OrderItems)
+                .FirstOrDefaultAsync(i => i.Id == id);
+
             if (existingItem == null)
             {
                 return NotFound("Item not found");
             }
+
+            if (existingItem.OrderItems.Any())
+            {
+                existingItem.IsDeleted = true;
+                await _context.SaveChangesAsync();
+                return Ok("Item archived (has order history, hidden from storefront).");
+            }
+
             _context.Item.Remove(existingItem);
             await _context.SaveChangesAsync();
             return Ok("Item deleted successfully");
